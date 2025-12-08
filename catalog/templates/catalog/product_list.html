@@ -1,18 +1,16 @@
 {% extends 'catalog/base.html' %}
 
-{% block title %}Главная страница{% endblock %}
+{% block title %}Список продуктов{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h1 class="mb-4">🛍️ Добро пожаловать в наш магазин!</h1>
-        <p class="lead">Здесь вы найдете лучшие товары по выгодным ценам.</p>
-    </div>
-</div>
+        <h1 class="mb-4">📦 Все продукты</h1>
 
-<div class="row mt-4">
-    <div class="col-12">
-        <h2 class="mb-3">📦 Наши товары</h2>
+        <div class="mb-3">
+            <a href="{% url 'product_create' %}" class="btn btn-primary">➕ Добавить продукт</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">← На главную</a>
+        </div>
 
         {% if products %}
         <div class="row">
@@ -32,7 +30,9 @@
                         <p class="card-text"><strong class="text-success">💰 {{ product.purchase_price }} руб.</strong></p>
                     </div>
                     <div class="card-footer">
-                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary btn-sm">Подробнее</a>
+                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary btn-sm">👀 Просмотр</a>
+                        <a href="{% url 'product_edit' product.pk %}" class="btn btn-secondary btn-sm">✏️ Редакт.</a>
+                        <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger btn-sm">🗑️ Удалить</a>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
         </div>
         {% else %}
         <div class="alert alert-info">
-            📭 Товары пока не добавлены.
+            📭 Продукты пока не добавлены.
         </div>
         {% endif %}
     </div>
