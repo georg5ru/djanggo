@@ -1,0 +1,34 @@
+<!-- catalog/templates/catalog/includes/header.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">🛍️ Мой Магазин</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                       href="{% url 'home' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'contacts' %}active{% endif %}"
+                       href="{% url 'contacts' %}">Контакты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/" target="_blank">Админка</a>
+                </li>
+            </ul>
+
+            <div class="navbar-text">
+                {% if user.is_authenticated %}
+                    <span class="text-light">Привет, {{ user.username }}!</span>
+                {% else %}
+                    <span class="text-light">Добро пожаловать!</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

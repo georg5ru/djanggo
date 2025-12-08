@@ -1,12 +1,12 @@
 # my_shop/urls.py
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('catalog.urls')),  # Добавьте эту строку
+    path('', include('catalog.urls')),  # Подключаем URLs приложения catalog
 ]
 
 if settings.DEBUG:
