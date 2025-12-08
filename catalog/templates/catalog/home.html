@@ -1,48 +1,83 @@
+<!-- catalog/templates/catalog/home.html -->
 {% extends 'catalog/base.html' %}
 
-{% block title %}Главная страница{% endblock %}
+{% block title %}Главная - Магазин{% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="row mb-4">
     <div class="col-12">
-        <h1 class="mb-4">🛍️ Добро пожаловать в наш магазин!</h1>
-        <p class="lead">Здесь вы найдете лучшие товары по выгодным ценам.</p>
+        <h1 class="display-4">🎯 Добро пожаловать в наш магазин!</h1>
+        <p class="lead">Здесь вы найдете лучшие товары по выгодным ценам</p>
     </div>
 </div>
 
-<div class="row mt-4">
+<div class="row mb-4">
     <div class="col-12">
-        <h2 class="mb-3">📦 Наши товары</h2>
-
+        <h2>Наши товары</h2>
         {% if products %}
-        <div class="row">
-            {% for product in products %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
-                    {% else %}
-                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                            <span class="text-muted">📷</span>
-                        </div>
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description|truncatewords:20 }}</p>
-                        <p class="card-text"><strong class="text-success">💰 {{ product.purchase_price }} руб.</strong></p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary btn-sm">Подробнее</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% else %}
-        <div class="alert alert-info">
-            📭 Товары пока не добавлены.
-        </div>
+            <p class="text-muted">Найдено товаров: {{ products|length }}</p>
         {% endif %}
     </div>
 </div>
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="position-relative">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 250px; object-fit: cover;">
+                {% else %}
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                        <span class="text-muted fs-1">📷</span>
+                    </div>
+                {% endif %}
+                <span class="position-absolute top-0 end-0 badge bg-primary m-2">
+                    {{ product.category.name }}
+                </span>
+            </div>
+
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text flex-grow-1">
+                    {{ product.description|truncatechars:100 }}
+                    {% if product.description|length > 100 %}
+                        <span class="text-muted">...</span>
+                    {% endif %}
+                </p>
+                <div class="mt-auto">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="h4 text-success mb-0">💰 {{ product.purchase_price }} руб.</span>
+                        <small class="text-muted">
+                            📅 {{ product.created_at|date:"d.m.Y" }}
+                        </small>
+                    </div>
+                    <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary w-100">
+                        👀 Подробнее
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info text-center py-5">
+            <h4>🛒 Товары отсутствуют</h4>
+            <p class="mb-0">В нашем магазине пока нет товаров. Зайдите позже!</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if products %}
+<div class="row mt-4">
+    <div class="col-12 text-center">
+        <div class="alert alert-light">
+            <small class="text-muted">
+                💡 Не нашли что искали? <a href="{% url 'contacts' %}" class="alert-link">Свяжитесь с нами</a> - мы поможем!
+            </small>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
