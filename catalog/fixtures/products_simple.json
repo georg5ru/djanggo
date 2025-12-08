@@ -1,0 +1,93 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Смартфон iPhone",
+      "description": "Современный смартфон",
+      "image": "",
+      "category": 1,
+      "purchase_price": "79999.99",
+      "created_at": "2025-11-17T12:00:00Z",
+      "updated_at": "2025-11-17T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Ноутбук Dell",
+      "description": "Мощный ноутбук для работы",
+      "image": "",
+      "category": 1,
+      "purchase_price": "65999.99",
+      "created_at": "2025-11-17T12:00:00Z",
+      "updated_at": "2025-11-17T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Наушники Sony",
+      "description": "Беспроводные наушники",
+      "image": "",
+      "category": 1,
+      "purchase_price": "12999.99",
+      "created_at": "2025-11-17T12:00:00Z",
+      "updated_at": "2025-11-17T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Python для начинающих",
+      "description": "Учебник по программированию",
+      "image": "",
+      "category": 2,
+      "purchase_price": "1899.99",
+      "created_at": "2025-11-17T12:00:00Z",
+      "updated_at": "2025-11-17T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "name": "Джинсы",
+      "description": "Классические джинсы",
+      "image": "",
+      "category": 3,
+      "purchase_price": "3999.99",
+      "created_at": "2025-11-17T12:00:00Z",
+      "updated_at": "2025-11-17T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "name": "Футбольный мяч",
+      "description": "Профессиональный мяч",
+      "image": "",
+      "category": 4,
+      "purchase_price": "2999.99",
+      "created_at": "2025-11-17T12:00:00Z",
+      "updated_at": "2025-11-17T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "name": "Офисный стол",
+      "description": "Деревянный стол",
+      "image": "",
+      "category": 5,
+      "purchase_price": "15999.99",
+      "created_at": "2025-11-17T12:00:00Z",
+      "updated_at": "2025-11-17T12:00:00Z"
+    }
+  }
+]
