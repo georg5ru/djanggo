@@ -12,19 +12,18 @@
                     <a class="nav-link" href="{% url 'home' %}">🏠 Главная</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'product_list' %}">📦 Все продукты</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'blog:blogpost_list' %}">📝 Блог</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'contacts' %}">📞 Контакты</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/">⚙️ Админка</a>
-                </li>
             </ul>
 
             <div class="navbar-text">
-                <!-- Убираем проверку авторизации и кнопку "Написать" из шапки -->
-                <span class="text-light">Добро пожаловать в наш магазин!</span>
+                <a href="{% url 'product_create' %}" class="btn btn-sm btn-outline-light">➕ Добавить продукт</a>
             </div>
         </div>
     </div>

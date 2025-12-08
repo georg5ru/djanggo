@@ -1,0 +1,48 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Список продуктов{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">📦 Все продукты</h1>
+
+        <div class="mb-3">
+            <a href="{% url 'product_create' %}" class="btn btn-primary">➕ Добавить продукт</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">← На главную</a>
+        </div>
+
+        {% if products %}
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">📷</span>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+                        <p class="card-text"><strong class="text-success">💰 {{ product.purchase_price }} руб.</strong></p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary btn-sm">👀 Просмотр</a>
+                        <a href="{% url 'product_edit' product.pk %}" class="btn btn-secondary btn-sm">✏️ Редакт.</a>
+                        <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger btn-sm">🗑️ Удалить</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            📭 Продукты пока не добавлены.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
