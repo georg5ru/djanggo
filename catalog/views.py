@@ -1,7 +1,7 @@
-# catalog/views.py
 from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
 
+# FBV - старые функции
 def home(request):
     """Главная страница со списком товаров"""
     products = Product.objects.all()

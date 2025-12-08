@@ -1,7 +1,6 @@
-<!-- catalog/templates/catalog/product_detail.html -->
 {% extends 'catalog/base.html' %}
 
-{% block title %}{{ product.name }} - Детали товара{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -9,8 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'home' %}">🏠 Главная</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">📦 Товары</a></li>
-                <li class="breadcrumb-item active">{{ product.name|truncatechars:30 }}</li>
+                <li class="breadcrumb-item active">{{ product.name }}</li>
             </ol>
         </nav>
     </div>
@@ -21,13 +19,10 @@
         <div class="card">
             <div class="card-body text-center">
                 {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow" style="max-height: 500px; width: auto;">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded">
                 {% else %}
-                    <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 400px;">
-                        <div>
-                            <span class="text-muted fs-1 d-block">📷</span>
-                            <span class="text-muted">Изображение отсутствует</span>
-                        </div>
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 300px;">
+                        <span class="text-muted">📷 Изображение отсутствует</span>
                     </div>
                 {% endif %}
             </div>
@@ -37,19 +32,21 @@
     <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
-                <h1 class="card-title display-6">{{ product.name }}</h1>
+                <h1 class="card-title">{{ product.name }}</h1>
 
+                {% if product.category %}
                 <div class="mb-3">
-                    <span class="badge bg-primary fs-6">📁 {{ product.category.name }}</span>
+                    <span class="badge bg-primary">📁 {{ product.category.name }}</span>
                 </div>
+                {% endif %}
 
                 <div class="mb-4">
                     <h2 class="text-success">💰 {{ product.purchase_price }} руб.</h2>
                 </div>
 
                 <div class="mb-4">
-                    <h4>📝 Описание товара</h4>
-                    <p class="card-text lead">{{ product.description|linebreaks }}</p>
+                    <h4>📝 Описание</h4>
+                    <p class="card-text">{{ product.description|linebreaks }}</p>
                 </div>
 
                 <div class="card mb-4">
@@ -70,49 +67,12 @@
                     </div>
                 </div>
 
-                <div class="d-grid gap-2 d-md-flex">
-                    <a href="{% url 'home' %}" class="btn btn-secondary me-md-2">
-                        ← Назад к товарам
-                    </a>
-                    <a href="{% url 'contacts' %}" class="btn btn-outline-primary">
-                        📞 Связаться с нами
-                    </a>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'home' %}" class="btn btn-secondary">← Назад к товарам</a>
+                    <a href="{% url 'contacts' %}" class="btn btn-outline-primary">📞 Связаться с нами</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Похожие товары (из той же категории) -->
-{% with similar_products=product.category.product_set.exclude.pk=product.pk|slice:":3" %}
-    {% if similar_products %}
-    <div class="row mt-5">
-        <div class="col-12">
-            <h3>🎯 Похожие товары</h3>
-            <div class="row">
-                {% for similar in similar_products %}
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        {% if similar.image %}
-                            <img src="{{ similar.image.url }}" class="card-img-top" alt="{{ similar.name }}" style="height: 150px; object-fit: cover;">
-                        {% else %}
-                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
-                                <span class="text-muted">📷</span>
-                            </div>
-                        {% endif %}
-                        <div class="card-body">
-                            <h6 class="card-title">{{ similar.name|truncatechars:30 }}</h6>
-                            <p class="card-text text-success">💰 {{ similar.purchase_price }} руб.</p>
-                            <a href="{% url 'product_detail' similar.pk %}" class="btn btn-sm btn-outline-primary w-100">
-                                Смотреть
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
-{% endwith %}
 {% endblock %}
