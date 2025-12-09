@@ -84,35 +84,34 @@
 </div>
 
 <!-- Похожие товары (из той же категории) -->
-{% with similar_products=product.category.product_set.exclude.pk=product.pk|slice:":3" %}
-    {% if similar_products %}
-    <div class="row mt-5">
-        <div class="col-12">
-            <h3>🎯 Похожие товары</h3>
-            <div class="row">
-                {% for similar in similar_products %}
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        {% if similar.image %}
-                            <img src="{{ similar.image.url }}" class="card-img-top" alt="{{ similar.name }}" style="height: 150px; object-fit: cover;">
-                        {% else %}
-                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
-                                <span class="text-muted">📷</span>
-                            </div>
-                        {% endif %}
-                        <div class="card-body">
-                            <h6 class="card-title">{{ similar.name|truncatechars:30 }}</h6>
-                            <p class="card-text text-success">💰 {{ similar.purchase_price }} руб.</p>
-                            <a href="{% url 'product_detail' similar.pk %}" class="btn btn-sm btn-outline-primary w-100">
-                                Смотреть
-                            </a>
+{% if related_products %}
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>🎯 Похожие товары</h3>
+        <div class="row">
+            {% for similar in related_products %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    {% if similar.image %}
+                        <img src="{{ similar.image.url }}" class="card-img-top" alt="{{ similar.name }}" style="height: 150px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                            <span class="text-muted">📷</span>
                         </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="card-title">{{ similar.name|truncatechars:30 }}</h6>
+                        <p class="card-text text-success">💰 {{ similar.purchase_price }} руб.</p>
+                        <a href="{% url 'product_detail' similar.pk %}" class="btn btn-sm btn-outline-primary w-100">
+                            Смотреть
+                        </a>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
-    {% endif %}
+</div>
+{% endif %}
 {% endwith %}
 {% endblock %}
