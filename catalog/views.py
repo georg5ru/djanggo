@@ -13,9 +13,7 @@ def home(request):
 def product_detail(request, pk):
     """Страница с подробной информацией о товаре + связанные товары"""
     product = get_object_or_404(Product, pk=pk)
-
-    # Получаем до 3 других товаров из той же категории, исключая текущий
-    related_products = product.category.product_set.exclude(pk=product.pk)[:3]
+    related_products = product.category.product_set.exclude(pk=product.pk)
 
     context = {
         'product': product,
