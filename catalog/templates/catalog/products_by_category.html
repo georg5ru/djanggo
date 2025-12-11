@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Продукты в категории: {{ category_name }}</title>
+</head>
+<body>
+    <h1>Продукты в категории: {{ category_name }}</h1>
+
+    {% if products %}
+        <ul>
+        {% for product in products %}
+            <li>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <p>Цена: {{ product.price }} руб.</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет продуктов в этой категории.</p>
+    {% endif %}
+
+    <a href="{% url 'catalog:product_list' %}">Назад к списку товаров</a>
+</body>
+</html>
