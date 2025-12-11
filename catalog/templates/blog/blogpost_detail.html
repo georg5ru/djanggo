@@ -1,0 +1,44 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ blogpost.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'blog:blogpost_list' %}">Блог</a></li>
+                <li class="breadcrumb-item active">{{ blogpost.title }}</li>
+            </ol>
+        </nav>
+
+        <article>
+            <h1>{{ blogpost.title }}</h1>
+
+            <div class="text-muted mb-4">
+                <small>📅 {{ blogpost.created_at|date:"d.m.Y H:i" }}</small>
+                <small class="ms-3">👁️ {{ blogpost.views_count }}</small>
+            </div>
+
+            {% if blogpost.preview %}
+            <div class="mb-4">
+                <img src="{{ blogpost.preview.url }}" alt="{{ blogpost.title }}" class="img-fluid rounded">
+            </div>
+            {% endif %}
+
+            <div class="blog-content">
+                {{ blogpost.content|linebreaks }}
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'blog:blogpost_list' %}" class="btn btn-secondary">← Назад к списку</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'blog:blogpost_edit' blogpost.pk %}" class="btn btn-primary">Редактировать</a>
+                <a href="{% url 'blog:blogpost_delete' blogpost.pk %}" class="btn btn-danger">Удалить</a>
+                {% endif %}
+            </div>
+        </article>
+    </div>
+</div>
+{% endblock %}

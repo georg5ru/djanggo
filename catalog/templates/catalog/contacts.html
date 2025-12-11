@@ -1,88 +1,46 @@
-<!-- catalog/templates/catalog/contacts.html -->
 {% extends 'catalog/base.html' %}
 
-{% block title %}Контакты - Магазин{% endblock %}
+{% block title %}Контакты{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h1 class="display-4 mb-4">📞 Контакты</h1>
-    </div>
-</div>
+        <h1 class="mb-4">📞 Контакты</h1>
 
-<div class="row">
-    <div class="col-lg-8 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">Наши контакты</h3>
-
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <h5>📞 Телефоны</h5>
-                        <ul class="list-unstyled">
-                            <li><strong>Основной:</strong> +7 (123) 456-78-90</li>
-                            <li><strong>Дополнительный:</strong> +7 (987) 654-32-10</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>📧 Электронная почта</h5>
-                        <ul class="list-unstyled">
-                            <li><strong>Общие вопросы:</strong> info@myshop.com</li>
-                            <li><strong>Техподдержка:</strong> support@myshop.com</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <h5>🏢 Адрес</h5>
-                        <p>
-                            <strong>г. Москва, ул. Примерная, д. 123</strong><br>
-                            <small class="text-muted">БЦ "Примерный", 5 этаж, офис 501</small>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <h5>🕒 Режим работы</h5>
-                        <ul class="list-unstyled">
-                            <li><strong>Пн-Пт:</strong> 9:00 - 18:00</li>
-                            <li><strong>Сб:</strong> 10:00 - 16:00</li>
-                            <li><strong>Вс:</strong> выходной</li>
-                        </ul>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">📧 Наши контакты</h5>
+                        <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
+                        <p><strong>Email:</strong> info@myshop.ru</p>
+                        <p><strong>Адрес:</strong> г. Москва, ул. Примерная, д. 123</p>
+                        <p><strong>Режим работы:</strong> Пн-Пт: 9:00-18:00</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">🚀 Быстрые ссылки</h5>
-                <div class="d-grid gap-2">
-                    <a href="{% url 'home' %}" class="btn btn-outline-primary">
-                        🏠 На главную
-                    </a>
-                    <a href="/admin/" class="btn btn-outline-secondary" target="_blank">
-                        ⚙️ Админка
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="card-body">
-                <h5 class="card-title">💡 Нужна помощь?</h5>
-                <p class="card-text">
-                    Не нашли нужный товар? Есть вопросы по заказу?
-                    Мы всегда готовы помочь!
-                </p>
-                <div class="alert alert-info">
-                    <small>
-                        ⏰ Ответим в течение 15 минут в рабочее время
-                    </small>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">✉️ Написать нам</h5>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Ваше имя</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Телефон</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Сообщение</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
