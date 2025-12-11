@@ -7,7 +7,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('catalog.urls')),
     path('blogs/', include('blog.urls', namespace='blog')),
-    path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
 ]
 
