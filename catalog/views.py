@@ -1,6 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
 from django.http import HttpResponseForbidden
+from django.views.generic import DetailView
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from .services import get_products_by_category
+from django.core.cache import cache
 
 
 # FBV - старые функции
@@ -24,6 +29,30 @@ def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
+def products_by_category(request, category_name):
+    products = get_products_by_category(category_name)
+    return render(request, 'catalog/products_by_category.html', {
+        'products': products,
+        'category_name': category_name
+    })
+
+
+def product_list(request):
+    # Ключ для кеша
+    cache_key = 'product_list_published'
+
+    # Пытаемся получить данные из кеша
+    products = cache.get(cache_key)
+
+    if not products:
+        # Если нет в кеше — получаем из БД
+        products = Product.objects.filter(is_published=True).select_related('owner')
+        # Сохраняем в кеш на 600 секунд (10 минут)
+        cache.set(cache_key, products, 600)
+
+    return render(request, 'catalog/product_list.html', {'products': products})
+
+
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
@@ -32,6 +61,7 @@ from .forms import ProductForm
 
 
 # CBV для продуктов
+@method_decorator(cache_page(300), name='dispatch')
 class ProductListView(ListView):
     model = Product
     template_name = 'catalog/product_list.html'
