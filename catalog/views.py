@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
+from django.http import HttpResponseForbidden
 
 
 # FBV - старые функции
@@ -39,23 +40,50 @@ class ProductListView(ListView):
 
 class ProductCreateView(CreateView):
     model = Product
+    fields = ['name', 'description', 'price']
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
+    success_url = reverse_lazy('catalog:product_list')
 
     def get_success_url(self):
         return reverse('product_detail', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        # Привязываем текущего пользователя как владельца
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):
     model = Product
+    fields = ['name', 'description', 'price', 'is_published']
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
+    success_url = reverse_lazy('catalog:product_list')
 
     def get_success_url(self):
         return reverse('product_detail', kwargs={'pk': self.object.pk})
+
+    def dispatch(self, request, *args, **kwargs):
+        product = self.get_object()
+
+        # Проверяем: владелец ИЛИ модератор?
+        if product.owner != request.user and not request.user.groups.filter(name="Модератор продуктов").exists():
+            return HttpResponseForbidden("Вы не можете редактировать этот продукт.")
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ProductDeleteView(DeleteView):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('product_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        product = self.get_object()
+
+        # Владелец ИЛИ модератор может удалять
+        if product.owner != request.user and not request.user.groups.filter(name="Модератор продуктов").exists():
+            return HttpResponseForbidden("Вы не можете удалить этот продукт.")
+
+        return super().dispatch(request, *args, **kwargs)

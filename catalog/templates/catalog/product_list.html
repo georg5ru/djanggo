@@ -44,5 +44,24 @@
         </div>
         {% endif %}
     </div>
+    {% for product in products %}
+    <div>
+    <h3>{{ product.name }}</h3>
+    <p>Статус: {% if product.is_published %}Опубликован{% else %}Черновик{% endif %}</p>
+
+    <!-- Кнопки видны, если пользователь авторизован и является владельцем ИЛИ модератором -->
+    {% if user.is_authenticated %}
+      {% if product.owner == user or user.groups.filter(name="Модератор продуктов") %}
+        <a href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+        <a href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
+      {% endif %}
+    {% endif %}
+    </div>
+{% endfor %}
+
+<!-- Кнопка "Создать" — доступна всем авторизованным -->
+{% if user.is_authenticated %}
+  <a href="{% url 'catalog:product_create' %}">Создать продукт</a>
+{% endif %}
 </div>
 {% endblock %}
