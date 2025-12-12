@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # FBV - старые функции
 
@@ -31,13 +31,13 @@ from .forms import ProductForm
 
 
 # CBV для продуктов
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = 'catalog/product_list.html'
     context_object_name = 'products'
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
@@ -46,7 +46,7 @@ class ProductCreateView(CreateView):
         return reverse('product_detail', kwargs={'pk': self.object.pk})
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
@@ -55,7 +55,7 @@ class ProductUpdateView(UpdateView):
         return reverse('product_detail', kwargs={'pk': self.object.pk})
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('product_list')
