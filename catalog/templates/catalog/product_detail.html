@@ -1,0 +1,78 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">🏠 Главная</a></li>
+                <li class="breadcrumb-item active">{{ product.name }}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded">
+                {% else %}
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 300px;">
+                        <span class="text-muted">📷 Изображение отсутствует</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ product.name }}</h1>
+
+                {% if product.category %}
+                <div class="mb-3">
+                    <span class="badge bg-primary">📁 {{ product.category.name }}</span>
+                </div>
+                {% endif %}
+
+                <div class="mb-4">
+                    <h2 class="text-success">💰 {{ product.purchase_price }} руб.</h2>
+                </div>
+
+                <div class="mb-4">
+                    <h4>📝 Описание</h4>
+                    <p class="card-text">{{ product.description|linebreaks }}</p>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">📋 Информация о товаре</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>📅 Дата добавления:</strong><br>
+                                {{ product.created_at|date:"d.m.Y H:i" }}
+                            </div>
+                            <div class="col-md-6">
+                                <strong>🔄 Последнее обновление:</strong><br>
+                                {{ product.updated_at|date:"d.m.Y H:i" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a href="{% url 'home' %}" class="btn btn-secondary">← Назад к товарам</a>
+                    <a href="{% url 'contacts' %}" class="btn btn-outline-primary">📞 Связаться с нами</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

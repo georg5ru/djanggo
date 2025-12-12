@@ -1,4 +1,3 @@
-# my_shop/urls.py
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -6,7 +5,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('catalog.urls')),  # Добавьте эту строку
+    path('', include('catalog.urls')),
+    path('blogs/', include('blog.urls', namespace='blog')),
+    path('users/', include('users.urls')),
 ]
 
 if settings.DEBUG:
